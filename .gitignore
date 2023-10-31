@@ -1,0 +1,32 @@
+# Python files
+*.pyc
+*.pyo
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# PyCharm IDE
+.idea/
+*.iml
+
+# Dotfiles
+.env
+
+
+# Virtual environment
+venv/
+*.venv
+venv.bak/
+.env/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Other
+.DS_Store
