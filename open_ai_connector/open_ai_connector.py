@@ -4,6 +4,8 @@ from typing import List
 import openai
 from dotenv import load_dotenv
 
+from open_ai_connector.const import OpenAiModels
+
 
 class OpenAIConnector:
     _instance = None
@@ -38,7 +40,7 @@ class OpenAIConnector:
         self,
         model: str,
         messages: List[dict],
-        max_token: int = 300,
+        max_token: int = 150,
         variations: int = 1,
         temperature: float = 0.5,
     ) -> str:
@@ -50,6 +52,12 @@ class OpenAIConnector:
             messages=messages,
         )
         return response.choices[0].message.content
+
+    def generate_embedding(self, text_to_embbeded: str) -> str:
+        embedding = openai.Embedding.create(
+            input=text_to_embbeded, model=OpenAiModels.text_embedding_ada_002.value
+        )["data"][0]["embedding"]
+        return embedding
 
 
 if __name__ == "__main__":
