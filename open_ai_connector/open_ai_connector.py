@@ -1,5 +1,5 @@
 import os
-from typing import List
+from typing import List, BinaryIO
 
 import openai
 from dotenv import load_dotenv
@@ -58,6 +58,12 @@ class OpenAIConnector:
             input=text_to_embbeded, model=OpenAiModels.text_embedding_ada_002.value
         )["data"][0]["embedding"]
         return embedding
+
+    def use_whisperer(self, audio_file: BinaryIO) -> str:
+        transcript = openai.Audio.transcribe(
+            model=OpenAiModels.whisper_1.value, file=audio_file, response_format='text'
+        )
+        return transcript
 
 
 if __name__ == "__main__":
