@@ -37,7 +37,7 @@ class Solver:
     def send_answer(self, solution: Callable, **kwargs):
         if self.input_data:
             if kwargs != {}:
-                answer = solution(kwargs['additional_data'])
+                answer = solution(kwargs["additional_data"])
             else:
                 answer = solution(self.input_data)
         else:
@@ -57,8 +57,8 @@ class Solver:
         if kwargs == {}:
             self.download_input_data()
             self.send_answer(solving_func)
-        elif 'additional_data' in kwargs:
-            additional_data = kwargs.get('additional_data', None)
+        elif "additional_data" in kwargs:
+            additional_data = kwargs.get("additional_data", None)
             self.download_input_data()
             self.send_answer(solving_func, additional_data=additional_data)
         else:
