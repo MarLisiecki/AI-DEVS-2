@@ -11,8 +11,8 @@ from open_ai_connector.open_ai_connector import OpenAIConnector
 from solver.prompt_builder import prepare_prompt
 from solver.solver import Solver
 
-ASSISTANT_CONTENT = 'This is the source of your knowledge {context}'
-USER_CONTENT = '{question}'
+ASSISTANT_CONTENT = "This is the source of your knowledge {context}"
+USER_CONTENT = "{question}"
 
 
 def count_calls(func):
@@ -61,7 +61,7 @@ def scraper(input_data: dict) -> dict:
         ASSISTANT_CONTENT.format(context=context),
         USER_CONTENT.format(question=question),
     )
-    answer = oai.generate_answer( model=OpenAiModels.gpt4.value, messages=prompt)
+    answer = oai.generate_answer(model=OpenAiModels.gpt4.value, messages=prompt)
     prepared_answer = {"answer": answer}
     return prepared_answer
 

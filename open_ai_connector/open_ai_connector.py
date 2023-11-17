@@ -92,6 +92,32 @@ class OpenAIConnector:
         )
         return transcript
 
+    def use_vision(self, text, url, assistant_knowledge):
+        response = (
+            openai.ChatCompletion.create(
+                model=OpenAiModels.gpt4_vision.value,
+                messages=[
+                    {
+                        "role": "user",
+                        "content": [
+                            {"type": "text", "text": text},
+                            {
+                                "type": "image_url",
+                                "image_url": {
+                                    "url": url,
+                                },
+                            },
+                        ],
+                    },
+                    {"role": "assistant", "content": assistant_knowledge},
+                ],
+                max_tokens=300,
+            ),
+        )
+
+        print(response[0]["choices"][0]["message"]["content"])
+        return response[0]["choices"][0]["message"]["content"]
+
 
 if __name__ == "__main__":
     pass
