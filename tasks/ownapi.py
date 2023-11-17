@@ -7,8 +7,12 @@ from solver.prompt_builder import prepare_prompt
 from solver.solver import Solver
 
 ASSISTANT_CONTENT = '''
-User can pass the information or ask the question. Based on data or based on your knowledge: {knowledge}.
-Answer the question ultra-briefly.'''
+User can pass the information or ask the question. Based on data:
+###  
+{knowledge}
+###
+Or based on your knowledge
+answer the question ultra-briefly.'''
 USER_CONTENT = "{question}"
 
 from pydantic import BaseModel
@@ -21,14 +25,24 @@ class Question(BaseModel):
 
 app = FastAPI()
 
+def save_as_memory(info: str):
+    with open('knowledge.txt', 'w') as file:
+        file.write(info)
+
+def read_from_memory() -> str:
+    with open('knowledge.txt', 'r') as file:
+        knowledge = file.read()
+        return knowledge
 
 @app.post("/ask-question/")
 def handle_question(question_data: Question):
     # Process the question here
     question = question_data.question
-    with open('knowledge.txt', 'w') as file:
-        knowledge = file.read()
-        file.write(question)
+    knowledge = ''
+    if '?' not in question:
+        save_as_memory(question)
+    else:
+        knowledge += read_from_memory()
     oai = OpenAIConnector()
     prompt = prepare_prompt(
         ASSISTANT_CONTENT.format(knowledge=knowledge),
